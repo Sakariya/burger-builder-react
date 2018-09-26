@@ -2,12 +2,20 @@ import React from 'react';
 import classes from './Burger.css'
 import BurgerIngredients from './BurgerIngredients/BurgerIngredients';
 const burger = (props) => {
-    const transfromedIngredients = Object.keys(props.ingredients).
+    let transfromedIngredients = Object.keys(props.ingredients).
     map(igKey => {
         return [...Array(props.ingredients[igKey])].map((__dirname, index) => {
             return <BurgerIngredients key={igKey + index} type={igKey} />;
         });
-    });
+    }).reduce( (arr, ele) => {
+        return arr.concat(ele)
+    }, []);
+
+    console.log('transfromedIngredients --> ', transfromedIngredients);
+    
+    if(transfromedIngredients.length === 0){
+        transfromedIngredients = <p>Please start with adding ingredient!</p>
+    }
     
     return (
         <div className={classes.Burger}>
